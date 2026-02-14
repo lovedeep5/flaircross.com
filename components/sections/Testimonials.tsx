@@ -15,7 +15,7 @@ const testimonials = [
         role: "Founder, Tech Startup"
     },
     {
-        quote: "Professional, responsive, and truly expert in automation. They solved problems we didn't even know we had.",
+        quote: "Professional, responsive, and truly expert in automation. They solved problems we didn’t even know we had.",
         author: "Elena R.",
         role: "Marketing Director"
     }
@@ -41,7 +41,7 @@ export function Testimonials() {
                         >
                             <Quote className="h-10 w-10 text-primary/20 absolute top-6 left-6" />
                             <p className="relative z-10 text-lg text-muted-foreground mb-6 pt-6">
-                                "{item.quote}"
+                                &ldquo;{item.quote}&rdquo;
                             </p>
                             <div>
                                 <div className="font-semibold">{item.author}</div>

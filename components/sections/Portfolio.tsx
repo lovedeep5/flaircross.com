@@ -1,30 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
-import Link from "next/link";
-import Image from "next/image"; // Note: User needs to provide images, using placeholders if none
-
-const projects = [
-    {
-        title: "E-Commerce Automation Suite",
-        category: "Automation • n8n",
-        description: "Full-scale order processing and inventory management automation for a Shopify store, reducing manual work by 80%.",
-        image: "/placeholder-project-1.jpg" // Placeholder
-    },
-    {
-        title: "SaaS Dashboard Redesign",
-        category: "Web Design • Next.js",
-        description: "Modern, dark-mode dashboard for a fintech startup with real-time data visualization and smooth interactions.",
-        image: "/placeholder-project-2.jpg" // Placeholder
-    },
-    {
-        title: "AI Customer Support Agent",
-        category: "AI • OpenCall",
-        description: "Voice-enabled AI assistant for a healthcare provider, handling appointment scheduling and FAQs.",
-        image: "/placeholder-project-3.jpg" // Placeholder
-    }
-];
 
 export function Portfolio() {
     return (

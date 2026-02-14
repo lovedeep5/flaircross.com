@@ -1,8 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import { Linkedin, Twitter, Github } from "lucide-react";
-
 export function Footer() {
     return (
         <footer className="bg-background border-t py-12">

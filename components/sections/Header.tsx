@@ -14,6 +14,7 @@ const navItems = [
     { name: "Automation", href: "#automation" },
     { name: "Portfolio", href: "#portfolio" },
     { name: "About", href: "#about" },
+    { name: "Blog", href: "/blog" },
 ];
 
 export function Header() {

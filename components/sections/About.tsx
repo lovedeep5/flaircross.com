@@ -21,7 +21,7 @@ export function About() {
                             Why Choose FlairCross?
                         </h2>
                         <p className="text-lg text-muted-foreground mb-6">
-                            We don't just build websites; we build digital engines for growth. Our unique blend of high-end design and complex automation expertise sets us apart.
+                            We don’t just build websites; we build digital engines for growth. Our unique blend of high-end design and complex automation expertise sets us apart.
                         </p>
                         <div className="space-y-4 mb-8">
                             {[
@@ -39,7 +39,7 @@ export function About() {
                             ))}
                         </div>
                         <Button size="lg" variant="secondary" asChild>
-                            <Link href="#contact">Let's Talk Business</Link>
+                            <Link href="#contact">Let’s Talk Business</Link>
                         </Button>
                     </motion.div>
 
