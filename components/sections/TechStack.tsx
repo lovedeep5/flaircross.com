@@ -3,9 +3,9 @@
 import { motion } from "framer-motion";
 
 const technologies = [
-    "Next.js", "React", "Tailwind CSS", "TypeScript",
-    "n8n", "Zapier", "OpenCall", "Python",
-    "Node.js", "PostgreSQL", "OpenAI", "Supabase"
+    "n8n", "Zapier", "OpenAI", "OpenCall",
+    "Python", "Supabase", "Node.js", "PostgreSQL",
+    "Next.js", "React", "TypeScript", "Tailwind CSS"
 ];
 
 export function TechStack() {
@@ -13,9 +13,9 @@ export function TechStack() {
         <section className="py-16 border-y bg-background/50 backdrop-blur-sm">
             <div className="container px-4 md:px-6 mx-auto">
                 <p className="text-center text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-8">
-                    Powered by Modern Technologies
+                    Our Automation & Tech Stack
                 </p>
-                <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-4 md:gap-x-12">
+                <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-6 md:gap-x-16">
                     {technologies.map((tech, index) => (
                         <motion.span
                             key={index}
@@ -23,7 +23,7 @@ export function TechStack() {
                             whileInView={{ opacity: 1 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.05 }}
-                            className="text-lg md:text-xl font-bold text-foreground/80 hover:text-primary transition-colors cursor-default"
+                            className="text-xl md:text-2xl font-bold text-foreground/60 hover:text-primary transition-colors cursor-default"
                         >
                             {tech}
                         </motion.span>
