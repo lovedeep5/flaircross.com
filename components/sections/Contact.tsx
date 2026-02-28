@@ -50,7 +50,7 @@ export function Contact() {
                             <div className="space-y-4">
                                 <div className="flex items-center gap-3">
                                     <Mail className="h-5 w-5 text-primary" />
-                                    <a href="mailto:contact@flarecross.com" className="hover:text-primary transition-colors">contact@flarecross.com</a>
+                                    <a href="mailto:contact@flaircross.com" className="hover:text-primary transition-colors">contact@flaircross.com</a>
                                 </div>
                                 <div className="flex items-center gap-3">
                                     <MapPin className="h-5 w-5 text-primary" />
@@ -62,7 +62,7 @@ export function Contact() {
                         <div className="p-6 rounded-xl bg-primary/5 border border-primary/10">
                             <h4 className="font-semibold mb-2">Office Hours</h4>
                             <p className="text-sm text-muted-foreground">
-                                Monday - Friday: 9:00 AM - 6:00 PM EST<br />
+                                Monday - Friday: 9:00 AM - 6:00 PM IST<br />
                                 Weekend Support available for critical automation systems.
                             </p>
                         </div>
