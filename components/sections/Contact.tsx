@@ -7,14 +7,41 @@ import { Send, Mail, MapPin } from "lucide-react";
 
 export function Contact() {
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        service: "General Inquiry",
+        message: "",
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        setFormData(prev => ({ ...prev, [e.target.id]: e.target.value }));
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        setIsSubmitting(false);
-        alert("Message sent! We'll get back to you soon.");
+        setStatus("idle");
+
+        try {
+            const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            });
+
+            if (res.ok) {
+                setStatus("success");
+                setFormData({ name: "", email: "", service: "General Inquiry", message: "" });
+            } else {
+                setStatus("error");
+            }
+        } catch {
+            setStatus("error");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -81,6 +108,8 @@ export function Contact() {
                                 <input
                                     id="name"
                                     required
+                                    value={formData.name}
+                                    onChange={handleChange}
                                     className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                     placeholder="John Doe"
                                 />
@@ -91,6 +120,8 @@ export function Contact() {
                                     id="email"
                                     type="email"
                                     required
+                                    value={formData.email}
+                                    onChange={handleChange}
                                     className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                     placeholder="john@example.com"
                                 />
@@ -101,6 +132,8 @@ export function Contact() {
                             <label htmlFor="service" className="text-sm font-medium">Service Interest</label>
                             <select
                                 id="service"
+                                value={formData.service}
+                                onChange={handleChange}
                                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                             >
                                 <option>General Inquiry</option>
@@ -115,10 +148,23 @@ export function Contact() {
                             <textarea
                                 id="message"
                                 required
+                                value={formData.message}
+                                onChange={handleChange}
                                 className="flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                 placeholder="Tell us about your project..."
                             />
                         </div>
+
+                        {status === "success" && (
+                            <p className="text-sm text-green-600 dark:text-green-400">
+                                Message sent! We&apos;ll get back to you within 24 hours.
+                            </p>
+                        )}
+                        {status === "error" && (
+                            <p className="text-sm text-red-600 dark:text-red-400">
+                                Something went wrong. Please try again or email us directly.
+                            </p>
+                        )}
 
                         <Button type="submit" className="w-full" disabled={isSubmitting}>
                             {isSubmitting ? "Sending..." : "Send Message"}
