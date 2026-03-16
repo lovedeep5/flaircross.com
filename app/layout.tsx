@@ -6,43 +6,124 @@ import { Header } from "@/components/sections/Header";
 import { Footer } from "@/components/sections/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
 
-
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
-  title: "FlairCross Consultants | Automation & Web Development",
-  description: "Expert n8n, Zapier, and OpenCall automation services. Modern web design and development for scalable businesses.",
+  metadataBase: new URL("https://flarecross.com"),
+  title: {
+    default: "FlairCross Consultants | n8n Automation & AI Agent Development",
+    template: "%s | FlairCross",
+  },
+  description:
+    "FlairCross builds custom n8n workflows, AI agents, and voice AI pipelines that eliminate manual work and scale your operations. Expert Zapier, HubSpot, and OpenCall automation consultants.",
+  keywords: [
+    "n8n automation agency",
+    "business process automation",
+    "AI agent development",
+    "Zapier consultant",
+    "workflow automation services",
+    "OpenCall voice AI",
+    "HubSpot automation",
+    "self-hosted n8n",
+    "custom AI agents",
+    "automation consulting",
+  ],
+  authors: [{ name: "FlairCross Consultants", url: "https://flarecross.com" }],
+  creator: "FlairCross Consultants",
+  alternates: {
+    canonical: "https://flarecross.com",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://flarecross.com",
-    title: "FlairCross Consultants",
-    description: "Expert n8n, Zapier, and OpenCall automation services.",
+    title: "FlairCross Consultants | n8n Automation & AI Agent Development",
+    description:
+      "Custom n8n workflows, AI agents, and voice AI pipelines that eliminate manual work. Expert automation consultants for growing businesses.",
     siteName: "FlairCross Consultants",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "FlairCross Consultants — Automation & AI Development",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "FlairCross Consultants",
-    description: "Expert n8n, Zapier, and OpenCall automation services.",
+    site: "@flarecross",
+    creator: "@flarecross",
+    title: "FlairCross Consultants | n8n Automation & AI Agents",
+    description:
+      "Custom n8n workflows, AI agents, and voice AI pipelines that eliminate manual work.",
+    images: ["/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 
-const jsonLd = {
+const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "FlairCross Consultants",
-  "url": "https://flarecross.com",
-  "logo": "https://flarecross.com/logo.png",
-  "sameAs": [
+  name: "FlairCross Consultants",
+  url: "https://flarecross.com",
+  logo: "https://flarecross.com/logo.png",
+  description:
+    "FlairCross builds custom n8n automation workflows, AI agents, and voice AI pipelines for growing businesses.",
+  sameAs: [
     "https://twitter.com/flarecross",
-    "https://linkedin.com/company/flarecross"
+    "https://linkedin.com/company/flarecross",
   ],
-  "contactPoint": {
+  contactPoint: {
     "@type": "ContactPoint",
-    "telephone": "",
-    "contactType": "customer service",
-    "email": "contact@flarecross.com"
-  }
+    contactType: "customer service",
+    email: "contact@flarecross.com",
+    availableLanguage: "English",
+  },
+  areaServed: "Worldwide",
+  knowsAbout: [
+    "n8n workflow automation",
+    "Zapier automation",
+    "AI agent development",
+    "business process automation",
+    "voice AI pipelines",
+    "OpenCall",
+    "HubSpot automation",
+    "CRM integration",
+    "Next.js development",
+  ],
+};
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "FlairCross Consultants",
+  url: "https://flarecross.com",
+  priceRange: "$$",
+  description:
+    "Custom automation, AI agent, and web development services for businesses that want to eliminate manual work.",
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Automation & Development Services",
+    itemListElement: [
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "n8n Workflow Automation" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI Agent Development" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Voice AI Pipelines (OpenCall)" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Zapier Automation Consulting" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "HubSpot CRM Automation" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Next.js Web Application Development" } },
+    ],
+  },
 };
 
 export default function RootLayout({
@@ -55,13 +136,20 @@ export default function RootLayout({
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationJsonLd),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
         />
       </head>
-      <body className={cn(
-        "min-h-screen bg-background font-sans antialiased",
-        inter.variable
-      )}
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          inter.variable
+        )}
       >
         <ThemeProvider
           attribute="class"

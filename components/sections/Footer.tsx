@@ -16,6 +16,25 @@ export function Footer() {
                     </div>
 
                     <div className="flex flex-col gap-2 text-sm">
+                        <span className="font-medium">Company</span>
+                        <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors">
+                            About
+                        </Link>
+                        <Link href="/services" className="text-muted-foreground hover:text-foreground transition-colors">
+                            Services
+                        </Link>
+                        <Link href="/pricing" className="text-muted-foreground hover:text-foreground transition-colors">
+                            Pricing
+                        </Link>
+                        <Link href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
+                            Contact
+                        </Link>
+                        <Link href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
+                            Blog
+                        </Link>
+                    </div>
+
+                    <div className="flex flex-col gap-2 text-sm">
                         <span className="font-medium">Our Products</span>
                         <a href="https://n8nautomation.cloud" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
                             n8nautomation.cloud

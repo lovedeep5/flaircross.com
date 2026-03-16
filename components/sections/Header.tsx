@@ -10,10 +10,9 @@ import { ModeToggle } from "@/components/mode-toggle";
 
 
 const navItems = [
-    { name: "Services", href: "#services" },
-    { name: "Automation", href: "#automation" },
-    { name: "Portfolio", href: "#portfolio" },
-    { name: "About", href: "#about" },
+    { name: "Services", href: "/services" },
+    { name: "About", href: "/about" },
+    { name: "Pricing", href: "/pricing" },
     { name: "Blog", href: "/blog" },
 ];
 
@@ -55,7 +54,7 @@ export function Header() {
                             </Link>
                         ))}
                         <Button asChild>
-                            <Link href="#contact">Get Started</Link>
+                            <Link href="/contact">Get Started</Link>
                         </Button>
                         <ModeToggle />
                     </nav>
@@ -92,7 +91,7 @@ export function Header() {
                                 </Link>
                             ))}
                             <Button asChild className="w-full mt-2">
-                                <Link href="#contact" onClick={() => setIsOpen(false)}>
+                                <Link href="/contact" onClick={() => setIsOpen(false)}>
                                     Get Started
                                 </Link>
                             </Button>

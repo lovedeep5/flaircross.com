@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, CalendarClock } from "lucide-react";
-import { blogPosts } from "@/lib/blogPosts";
+import { getFeaturedPosts } from "@/lib/blogPosts";
 
 const formatter = new Intl.DateTimeFormat("en-US", {
   month: "short",
@@ -9,12 +9,7 @@ const formatter = new Intl.DateTimeFormat("en-US", {
 });
 
 export function BlogPreview() {
-  const featuredPosts = [...blogPosts]
-    .sort(
-      (a, b) =>
-        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-    )
-    .slice(0, 3);
+  const featuredPosts = getFeaturedPosts(3);
 
   return (
     <section id="blog" className="py-24 bg-muted/20">
