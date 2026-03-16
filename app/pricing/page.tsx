@@ -8,7 +8,7 @@ import { Check, ArrowRight } from "lucide-react";
 const plans = [
   {
     name: "Starter",
-    price: "$2,500",
+    price: "$499",
     period: "one-time",
     description: "A single automation or integration project, delivered fast.",
     features: [
@@ -16,14 +16,14 @@ const plans = [
       "Up to 5 connected apps",
       "Error handling and logging",
       "Documentation and handoff",
-      "14 days of post-launch support",
+      "7 days of post-launch support",
     ],
     cta: "Get Started",
     highlighted: false,
   },
   {
     name: "Growth",
-    price: "$5,000",
+    price: "$1,499",
     period: "per month",
     description:
       "Ongoing automation and development for teams scaling operations.",

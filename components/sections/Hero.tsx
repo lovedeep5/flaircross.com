@@ -51,12 +51,12 @@ export function Hero() {
                     className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
                 >
                     <Button size="lg" className="h-12 px-8 text-base font-semibold shadow-lg hover:shadow-xl transition-all" asChild>
-                        <Link href="#contact">
+                        <Link href="/contact">
                             Book a Strategy Call <ArrowRight className="ml-2 h-4 w-4" />
                         </Link>
                     </Button>
                     <Button variant="outline" size="lg" className="h-12 px-8 text-base" asChild>
-                        <Link href="#portfolio">See How It Works</Link>
+                        <Link href="/services">Explore Our Services</Link>
                     </Button>
                 </motion.div>
 

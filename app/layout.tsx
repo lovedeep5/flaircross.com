@@ -11,13 +11,14 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 export const metadata: Metadata = {
   metadataBase: new URL("https://flarecross.com"),
   title: {
-    default: "FlairCross Consultants | n8n Automation & AI Agent Development",
+    default: "FlairCross — n8n Automation, AI Agents & Workflow Development Agency",
     template: "%s | FlairCross",
   },
   description:
-    "FlairCross builds custom n8n workflows, AI agents, and voice AI pipelines that eliminate manual work and scale your operations. Expert Zapier, HubSpot, and OpenCall automation consultants.",
+    "FlairCross builds custom n8n workflows, AI agents, voice AI pipelines, and modern web applications that eliminate manual work and save 20+ hours per week. Expert Zapier, HubSpot, OpenCall, and CRM automation consultants serving businesses worldwide.",
   keywords: [
     "n8n automation agency",
+    "n8n workflow developer",
     "business process automation",
     "AI agent development",
     "Zapier consultant",
@@ -27,6 +28,10 @@ export const metadata: Metadata = {
     "self-hosted n8n",
     "custom AI agents",
     "automation consulting",
+    "CRM integration",
+    "no-code automation",
+    "AI workflow builder",
+    "n8n developer for hire",
   ],
   authors: [{ name: "FlairCross Consultants", url: "https://flarecross.com" }],
   creator: "FlairCross Consultants",
@@ -37,9 +42,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://flarecross.com",
-    title: "FlairCross Consultants | n8n Automation & AI Agent Development",
+    title: "FlairCross — n8n Automation, AI Agents & Workflow Development",
     description:
-      "Custom n8n workflows, AI agents, and voice AI pipelines that eliminate manual work. Expert automation consultants for growing businesses.",
+      "Custom n8n workflows, AI agents, and voice AI pipelines that eliminate manual work and save 20+ hours/week. Serving businesses worldwide.",
     siteName: "FlairCross Consultants",
     images: [
       {
@@ -54,9 +59,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@flarecross",
     creator: "@flarecross",
-    title: "FlairCross Consultants | n8n Automation & AI Agents",
+    title: "FlairCross — n8n Automation, AI Agents & Workflow Development",
     description:
-      "Custom n8n workflows, AI agents, and voice AI pipelines that eliminate manual work.",
+      "Custom n8n workflows, AI agents, and voice AI pipelines that eliminate manual work and save 20+ hours/week.",
     images: ["/og-image.png"],
   },
   robots: {
