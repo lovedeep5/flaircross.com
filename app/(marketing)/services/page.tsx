@@ -10,6 +10,8 @@ import {
   Code,
   Server,
   Database,
+  Globe,
+  Layers,
   ArrowRight,
   CheckCircle2,
 } from "lucide-react";
@@ -87,6 +89,32 @@ const services = [
       "Data sync and deduplication",
     ],
   },
+  {
+    icon: <Globe className="h-8 w-8" />,
+    title: "Website Design & Development",
+    description:
+      "Fast, beautiful websites that convert. We design and build from scratch — no page builders, no bloat, just clean Next.js.",
+    features: [
+      "Custom design (no templates)",
+      "Next.js + Tailwind CSS build",
+      "SEO-optimised from day one",
+      "Hosting, domain, and SSL setup",
+    ],
+    cta: { label: "View packages", href: "/shop" },
+  },
+  {
+    icon: <Layers className="h-8 w-8" />,
+    title: "WordPress → Next.js Migration",
+    description:
+      "Escape slow WordPress sites. We migrate your content and rebuild in Next.js — same URLs, faster load times, lower hosting cost.",
+    features: [
+      "Full content migration (posts, pages, media)",
+      "Zero broken links — all URLs preserved",
+      "Managed hosting included",
+      "Ongoing maintenance plan available",
+    ],
+    cta: { label: "Get a quote", href: "/contact" },
+  },
 ];
 
 export default function ServicesPage() {
@@ -147,6 +175,13 @@ export default function ServicesPage() {
                   </li>
                 ))}
               </ul>
+              {"cta" in service && service.cta && (
+                <div className="mt-6">
+                  <Link href={service.cta.href} className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline">
+                    {service.cta.label} <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+              )}
             </motion.div>
           ))}
         </div>
