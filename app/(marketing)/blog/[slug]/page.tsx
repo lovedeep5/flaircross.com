@@ -110,7 +110,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     .slice(0, 2);
 
   return (
-    <main className="py-12 md:py-20">
+    <main className="pt-28 pb-12 md:pb-20">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}

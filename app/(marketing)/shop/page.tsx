@@ -38,7 +38,7 @@ export default async function ShopPage() {
   }
 
   return (
-    <main className="max-w-6xl mx-auto px-4 sm:px-6 py-16 space-y-12">
+    <main className="max-w-6xl mx-auto px-4 sm:px-6 pt-28 pb-16 space-y-12">
       <div className="text-center space-y-4">
         <h1 className="text-4xl sm:text-5xl font-bold">Services & Products</h1>
         <p className="text-muted-foreground text-lg max-w-2xl mx-auto">

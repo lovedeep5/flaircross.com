@@ -81,7 +81,7 @@ export default async function ShopProductPage({ params }: { params: Promise<{ sl
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-16">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 pt-28 pb-16">
         <div className="grid md:grid-cols-5 gap-12">
           {/* Left: details */}
           <div className="md:col-span-3 space-y-6">
