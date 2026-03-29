@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Check,
   Users,
@@ -43,7 +44,7 @@ const strengths = [
 
 export default function AboutPage() {
   return (
-    <main className="py-24">
+    <main className="pt-28 pb-24">
       <div className="container mx-auto px-4 md:px-6">
         {/* Hero */}
         <div className="max-w-3xl mb-20">
@@ -101,29 +102,44 @@ export default function AboutPage() {
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-6">
-            {[
-              { stat: "100+", label: "Projects Delivered" },
-              { stat: "50+", label: "Active Automations" },
-              { stat: "24/7", label: "Systems Running" },
-              { stat: "12+", label: "Countries Served" },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="p-6 rounded-2xl border bg-card text-center"
-              >
-                <h3 className="text-3xl font-bold text-primary mb-1">
-                  {item.stat}
-                </h3>
-                <p className="text-sm text-muted-foreground">{item.label}</p>
-              </motion.div>
-            ))}
-          </div>
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="relative"
+          >
+            <div className="absolute inset-0 bg-primary/20 rounded-2xl blur-3xl scale-90 opacity-40" />
+            <Image
+              src="/about-team.jpg"
+              alt="FlairCross team working on automation systems"
+              width={600}
+              height={450}
+              className="relative rounded-2xl shadow-xl border border-border w-full object-cover"
+            />
+          </motion.div>
         </motion.section>
+
+        {/* Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-24">
+          {[
+            { stat: "100+", label: "Projects Delivered" },
+            { stat: "50+", label: "Active Automations" },
+            { stat: "24/7", label: "Systems Running" },
+            { stat: "12+", label: "Countries Served" },
+          ].map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="p-6 rounded-2xl border bg-card text-center"
+            >
+              <h3 className="text-3xl font-bold text-primary mb-1">{item.stat}</h3>
+              <p className="text-sm text-muted-foreground">{item.label}</p>
+            </motion.div>
+          ))}
+        </div>
 
         {/* Values */}
         <section className="mb-24">
@@ -182,20 +198,29 @@ export default function AboutPage() {
                 ))}
               </div>
             </div>
-            <div className="p-8 rounded-2xl border bg-primary/5">
-              <h3 className="text-xl font-semibold mb-4">
-                Built for businesses that move fast
-              </h3>
-              <p className="text-muted-foreground mb-6">
-                Whether you&apos;re a 5-person agency or a 200-person SaaS company,
-                we scope, build, and ship automation systems on predictable
-                timelines — no bloated retainers, no scope creep.
-              </p>
-              <Button asChild>
-                <Link href="/contact">
-                  Work With Us <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
+            <div className="space-y-6">
+              <div className="relative">
+                <div className="absolute inset-0 bg-primary/20 rounded-2xl blur-2xl scale-90 opacity-40" />
+                <Image
+                  src="/services-ecosystem.jpg"
+                  alt="Automation services ecosystem"
+                  width={560}
+                  height={420}
+                  className="relative rounded-2xl shadow-xl border border-border w-full object-cover"
+                />
+              </div>
+              <div className="p-6 rounded-2xl border bg-primary/5">
+                <h3 className="text-lg font-semibold mb-3">Built for businesses that move fast</h3>
+                <p className="text-muted-foreground text-sm mb-4">
+                  Whether you&apos;re a 5-person agency or a 200-person SaaS company,
+                  we scope, build, and ship automation systems on predictable timelines.
+                </p>
+                <Button asChild>
+                  <Link href="/contact">
+                    Work With Us <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
         </section>
