@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import Image from "next/image";
 import {
   Workflow,
   Bot,
@@ -120,7 +119,7 @@ const services = [
 
 export default function ServicesPage() {
   return (
-    <main className="pt-28 pb-24">
+    <main className="py-24">
       <div className="container mx-auto px-4 md:px-6">
         {/* Hero */}
         <div className="max-w-3xl mb-20">
@@ -149,23 +148,6 @@ export default function ServicesPage() {
             handle the build so you can focus on growth.
           </motion.p>
         </div>
-
-        {/* Ecosystem image */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="relative mb-20 rounded-2xl overflow-hidden"
-        >
-          <div className="absolute inset-0 bg-primary/10 blur-3xl scale-95 opacity-50" />
-          <Image
-            src="/services-ecosystem.jpg"
-            alt="FlairCross automation services ecosystem"
-            width={1200}
-            height={500}
-            className="relative w-full object-cover rounded-2xl border border-border shadow-2xl max-h-[420px]"
-          />
-        </motion.div>
 
         {/* Service Cards */}
         <div className="grid md:grid-cols-2 gap-8 mb-24">
