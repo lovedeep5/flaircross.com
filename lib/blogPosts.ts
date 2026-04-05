@@ -573,6 +573,480 @@ export const blogPosts: BlogPost[] = [
         highlight: "A B2B SaaS client running this system books 35–50 discovery calls per month with a two-person sales team. Their previous manual process produced 12–18 calls with the same headcount. Cost per booked meeting dropped from $340 to $89."
       }
     ]
+  },
+  {
+    slug: "ecommerce-automation-guide-2026",
+    title: "E-Commerce Automation in 2026: The Complete Guide to Running Your Store on Autopilot",
+    description: "A practical guide to automating your e-commerce store — from order processing and inventory to customer support, abandoned cart recovery, and supplier workflows — using n8n, Zapier, and modern tooling.",
+    excerpt: "Manual order management, support tickets, and inventory tracking kill e-commerce margins. Here's how to automate your entire store operation so you can focus on growth.",
+    publishedAt: "2026-03-25",
+    category: "Automation Strategy",
+    readingTime: "11 min read",
+    tags: ["E-Commerce", "Shopify", "Automation", "n8n", "Order Processing"],
+    featured: false,
+    content: [
+      {
+        body: [
+          "Running an e-commerce business in 2026 without automation is like trying to win a Formula 1 race with a bicycle. The stores scaling past seven figures aren't working harder — they've built systems that handle the repetitive operational layer so the team can focus on product, marketing, and customer relationships.",
+          "This guide covers the full stack of e-commerce automation: order processing, customer support, inventory management, marketing triggers, and supplier workflows. We'll show you exactly which tools to use, how they connect, and what a realistic implementation timeline looks like."
+        ]
+      },
+      {
+        heading: "Why e-commerce automation is no longer optional",
+        body: [
+          "The math is brutal. At 50 orders per day, manual order confirmation, fulfillment coordination, and support handling takes 3–4 hours of staff time. At 500 orders per day, you need a small team just for operations — and your error rate climbs with volume. Automation keeps error rates flat regardless of volume.",
+          "The three biggest pain points we see in e-commerce operations: (1) orders falling through the cracks during peak periods, (2) support tickets sitting unanswered for 24+ hours, and (3) stockouts that kill revenue because reorder triggers were manual. All three are solvable with automation."
+        ],
+        highlight: "A fashion e-commerce brand we worked with cut operational overhead by 62% after automating their order-to-fulfillment pipeline. The two team members previously doing manual order processing now run influencer partnerships instead."
+      },
+      {
+        heading: "Order processing automation",
+        body: [
+          "The core order flow — receive order, confirm payment, trigger fulfillment, update inventory, notify customer — should require zero human touch for standard orders. This is achievable with Shopify webhooks connected to your fulfillment provider (ShipBob, ShipStation, 3PL) via n8n or Zapier.",
+          "What the automated order flow looks like: Shopify fires a webhook on order creation → n8n validates payment status → creates fulfillment request in your 3PL's API → updates inventory in real-time → sends branded order confirmation email via Resend or Klaviyo → creates customer record in your CRM. For international orders, the workflow also triggers tax calculation and compliance checks automatically."
+        ],
+        list: [
+          "Order confirmation: triggered immediately on payment success, personalized with product images and estimated delivery",
+          "Fulfillment handoff: API call to 3PL with full order details, priority flags for express shipping",
+          "Inventory decrement: real-time stock level updates prevent overselling across all sales channels",
+          "Tracking number injection: when 3PL returns tracking, automatically sent to customer and logged in CRM",
+          "Delivery confirmation: webhook from carrier API triggers post-purchase review request sequence"
+        ]
+      },
+      {
+        heading: "Inventory and supplier automation",
+        body: [
+          "Stockouts are preventable. Your automation should monitor inventory levels continuously and trigger reorder workflows before you run out, not after. Set up low-stock alerts at 20% of average monthly sales velocity — the alert fires in Slack, creates a purchase order draft in your accounting software, and emails your supplier with pre-filled quantities.",
+          "For products with multiple suppliers, the workflow can compare lead times and pricing via API before selecting which supplier to contact. Products flagged as seasonal get inventory alerts calibrated to the calendar — tighter thresholds in the 6 weeks before your peak season."
+        ],
+        list: [
+          "Low-stock trigger: monitors inventory daily, fires when stock drops below configurable threshold",
+          "Automatic PO generation: creates draft purchase order in QuickBooks/Xero with correct supplier details",
+          "Supplier notification: sends PO via email with delivery deadline and SKU details",
+          "Receiving workflow: when goods arrive, updates inventory, reconciles against PO, flags discrepancies",
+          "Dead stock alert: identifies items with 60+ days no movement, triggers markdown suggestion"
+        ]
+      },
+      {
+        heading: "Customer support automation",
+        body: [
+          "The majority of e-commerce support tickets fall into predictable categories: order status, returns, address changes, and product questions. An AI-powered triage system can handle 60–70% of these without human intervention — and the remaining 30% arrive at your support team pre-sorted, pre-enriched, and with suggested responses.",
+          "Build a Zendesk or Freshdesk integration that reads incoming tickets, classifies them by intent, pulls the relevant order data from Shopify, and either resolves automatically or routes to the right agent with full context loaded. For 'where is my order' requests, the system looks up tracking and replies with live status — zero human required."
+        ],
+        highlight: "An average e-commerce store receives 1 support ticket per 35 orders. At 300 orders/day that's 8–9 tickets daily. Automation resolves 6–7 of them. Your support team only touches the genuinely complex ones."
+      },
+      {
+        heading: "Abandoned cart and marketing automation",
+        body: [
+          "Abandoned cart sequences are the highest-ROI automation in e-commerce. The standard three-email sequence (1 hour, 24 hours, 72 hours after abandonment) recovers 5–15% of abandoned carts when done well. The key is personalization: the emails reference the exact products abandoned, include social proof for those SKUs, and adjust the offer based on cart value.",
+          "Beyond abandoned cart, build post-purchase sequences that drive LTV: review requests at day 7, cross-sell recommendations at day 14 based on what they bought, and loyalty offers at the 90-day mark. Klaviyo, Drip, or a custom n8n sequence feeding into your email provider can handle all of this based on Shopify events."
+        ],
+        list: [
+          "Abandoned cart email 1 (1 hour): reminder with product images, no discount",
+          "Abandoned cart email 2 (24 hours): social proof, reviews for abandoned items",
+          "Abandoned cart email 3 (72 hours): urgency + 10% discount for high-value carts only",
+          "Post-purchase day 7: review request with one-click submission link",
+          "Post-purchase day 14: cross-sell based on purchase category",
+          "Win-back at 90 days: personalized offer for lapsed customers"
+        ]
+      },
+      {
+        heading: "Tools and implementation approach",
+        body: [
+          "For Shopify stores, n8n is our preferred automation backbone for complex multi-step workflows. It handles webhook ingestion, conditional logic, API calls to multiple services, and error handling in ways that Zapier's linear structure can't match at scale. For simpler single-step automations (like 'new order → send Slack notification'), Zapier or Shopify Flow handles it fine.",
+          "A realistic implementation timeline: start with order confirmation and fulfillment handoff in week one — this is the highest-risk manual process. Add inventory alerts in week two. Abandoned cart automation in week three. Build out the rest over 4–8 weeks as you validate each workflow. Don't try to automate everything at once."
+        ],
+        highlight: "Our e-commerce automation stack: Shopify webhooks → n8n (orchestration) → ShipStation (fulfillment) → Klaviyo (email) → Zendesk (support) → QuickBooks (accounting). The entire stack runs on a $45/month VPS with n8n self-hosted."
+      }
+    ]
+  },
+  {
+    slug: "online-photo-book-business-guide",
+    title: "How to Launch and Automate an Online Photo Book Business in 2026",
+    description: "A complete guide to starting an online custom photo book business — covering technology stack, print-on-demand integration, order automation, and marketing strategies that drive repeat customers.",
+    excerpt: "Custom photo books are a high-margin, repeat-purchase product. Here's how to build the technology and automation behind a successful photo book business from scratch.",
+    publishedAt: "2026-03-28",
+    category: "Business Strategy",
+    readingTime: "9 min read",
+    tags: ["Photo Book", "Print on Demand", "E-Commerce", "Automation", "Custom Printing"],
+    featured: false,
+    content: [
+      {
+        body: [
+          "Custom photo books occupy a valuable corner of the e-commerce market: they are personal, high-perceived-value, and naturally drive repeat purchases — birthdays, holidays, anniversaries, and travel all generate demand. The global photo printing market is projected to exceed $40 billion by 2028, and photo books represent the fastest-growing segment.",
+          "Building a successful online photo book business in 2026 is more achievable than ever, thanks to modern web-based design editors, print-on-demand fulfillment networks, and automation tools that can run the entire operational layer without a large team. This guide covers the technology stack, order flow, and marketing systems you need."
+        ]
+      },
+      {
+        heading: "The core business model",
+        body: [
+          "Photo book businesses generate revenue through a simple model: customer uploads photos, customizes a book using a web-based editor, places an order, you fulfill through a print partner, and ship directly to the customer. Margins typically run 40–60% after print and shipping costs — higher than most physical product categories.",
+          "The product range that drives the most revenue: classic softcover photo books ($15–$35), premium hardcover photo books ($35–$80), and large-format coffee table books ($60–$120). Subscription models (annual yearbook, quarterly mini-albums) generate predictable recurring revenue and significantly higher LTV."
+        ],
+        list: [
+          "Standard softcover photo book (20–40 pages): $15–$35 retail, 45–55% margin",
+          "Premium hardcover photo book (40–80 pages): $35–$80 retail, 50–60% margin",
+          "Large-format coffee table book (landscape, 60+ pages): $60–$120 retail, 55–65% margin",
+          "Canvas prints and photo gifts: natural upsell with 60–70% margin",
+          "Annual family yearbook subscription: $79–$149/year, highest LTV product"
+        ]
+      },
+      {
+        heading: "Technology stack for a photo book platform",
+        body: [
+          "The technology decision that matters most is your design editor — it's what customers interact with directly and the primary driver of conversion and satisfaction. Options range from building on open-source editors to licensing white-label solutions. For most businesses, a white-label editor integrated into your storefront is the fastest path to launch.",
+          "Your storefront runs on a modern web framework (Next.js is ideal for performance and SEO), connects to your design editor via API or iframe embed, and processes orders through a payment provider. The backend manages order state, communicates with your print partner, and drives the customer-facing experience from order confirmation to delivery."
+        ],
+        list: [
+          "Frontend: Next.js storefront with fast image upload and order management UI",
+          "Design editor: white-label solution (e.g., Mediaclip, Pixlr, Canva API) or custom-built",
+          "Payment: Stripe for cards, PayPal for international customers",
+          "Print fulfillment: API integration with print partner (Prodigi, Printful, or direct lab)",
+          "Order management: n8n workflows connecting storefront to print API to shipping carrier",
+          "CRM: email sequences for order confirmation, delivery, and re-engagement"
+        ]
+      },
+      {
+        heading: "Automating the order-to-delivery pipeline",
+        body: [
+          "The order flow in a photo book business has more steps than typical e-commerce because of the custom production requirement. Each order must be: received, the design file validated for print quality, submitted to the print lab, tracked through production, handed to a carrier, and confirmed delivered. Automating this pipeline is essential once you pass 10–20 orders per day.",
+          "Build your automation pipeline in n8n: new order webhook → design file validation (resolution, bleed, color mode) → print partner API submission → production status polling → shipping API for tracking → customer notification at each milestone. Orders that fail validation are automatically flagged for customer support with a specific error description so the team can resolve quickly."
+        ],
+        highlight: "GoPhotoBook.com is a great example of a modern photo book platform built with automated order processing at its core — from design upload through print fulfillment to doorstep delivery, the entire pipeline runs with minimal manual intervention."
+      },
+      {
+        heading: "Print-on-demand fulfillment options",
+        body: [
+          "You have two main fulfillment approaches: integrate directly with a print lab via API, or use a print-on-demand marketplace (Prodigi, Printful, Gelato) that handles lab relationships for you. Direct lab integration gives you better unit economics at scale but requires more technical work. POD marketplaces are faster to start and handle international fulfillment automatically.",
+          "For a new photo book business, start with a POD marketplace to validate demand without inventory risk. Once you're doing 50+ orders per month, evaluate direct lab relationships for the margin improvement. Most labs offer API access, and the switch is a matter of updating your order submission workflow in n8n."
+        ],
+        list: [
+          "Prodigi: strong API, global fulfillment network, good photo book quality",
+          "Gelato: excellent European fulfillment, competitive pricing, REST API",
+          "Printful: best for combined photo book + apparel stores, proven reliability",
+          "Direct lab (e.g., Momento, Saal Digital): best unit economics at 100+ orders/month",
+          "Hybrid: domestic orders via direct lab, international via POD marketplace"
+        ]
+      },
+      {
+        heading: "Marketing automation that drives repeat purchases",
+        body: [
+          "Photo book customers are naturally recurring — if someone orders a holiday photo book this December, they'll likely order again next December. Your marketing automation should be built around this annual cycle. Trigger a personalized campaign 60 days before each customer's first order anniversary, their birthday month, and major holidays.",
+          "The highest-converting post-purchase sequence: order confirmation with preview → shipping update → delivery confirmation + 'how to store your book' → review request at day 10 → upsell offer (matching canvas print or second copy) at day 20 → holiday campaign 90 days before the nearest major holiday. Klaviyo handles this well with Shopify or custom storefront integration."
+        ],
+        highlight: "Photo book businesses see 40–60% of revenue from repeat customers when they run consistent lifecycle email sequences. The AOV on second and third purchases is typically 25% higher than the first, as customers upgrade to premium formats."
+      },
+      {
+        heading: "Getting started: minimum viable launch",
+        body: [
+          "You don't need a custom-built editor to launch. Start with a Next.js storefront, a white-label editor (30-day trial available from most providers), Stripe for payments, and Prodigi for fulfillment. Build the order confirmation and fulfillment submission automation in n8n. Total time to a functional store: 3–5 weeks for a small technical team.",
+          "Focus your first 90 days on product quality and customer feedback rather than marketing scale. Send 50–100 test orders through your pipeline. Iron out the print quality, packaging, and delivery experience. Then build the marketing automation and scale traffic. A photo book business is reputation-driven — the product has to be right before you pour in acquisition spend."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "hubspot-crm-automation-workflows",
+    title: "10 HubSpot Automation Workflows That Eliminate Manual Sales Work in 2026",
+    description: "A practical guide to the 10 most impactful HubSpot automation workflows — from lead scoring and deal stage triggers to email sequences and CRM-to-n8n integrations — with setup instructions for each.",
+    excerpt: "HubSpot has powerful automation capabilities that most teams barely use. These 10 workflows eliminate the manual CRM work that wastes your sales team's time every day.",
+    publishedAt: "2026-04-01",
+    category: "CRM Automation",
+    readingTime: "10 min read",
+    tags: ["HubSpot", "CRM", "Sales Automation", "Workflows", "Lead Management"],
+    featured: false,
+    content: [
+      {
+        body: [
+          "HubSpot is one of the most capable CRMs on the market — and one of the most underused. Most teams configure the basics (pipeline stages, contact properties, email templates) and stop there, leaving the automation layer almost entirely untouched. The result: sales reps spending 40% of their time on manual CRM hygiene instead of selling.",
+          "These 10 workflows cover the highest-impact automations available in HubSpot, from basic lead routing to sophisticated multi-tool pipelines built with n8n. Each one can be implemented in a few hours and the cumulative effect on team efficiency is transformative."
+        ]
+      },
+      {
+        heading: "1. Lead scoring and ICP qualification",
+        body: [
+          "HubSpot's lead scoring lets you assign point values to demographic attributes (company size, industry, job title) and behavioral signals (email opens, page views, form submissions, pricing page visits). Contacts that cross a score threshold automatically move into 'Marketing Qualified Lead' status and trigger a handoff to sales.",
+          "The key to effective lead scoring is regular calibration — compare your scoring model to actual won deals quarterly and adjust weights based on which attributes actually correlate with conversion. A contact with a LinkedIn Premium title visiting your pricing page three times in a week should score higher than a random email subscriber."
+        ],
+        list: [
+          "Demographic scoring: company size (+10), target industry (+15), decision-maker title (+20)",
+          "Behavioral scoring: pricing page visit (+15), demo request (+40), case study download (+10)",
+          "Negative scoring: personal email domain (-10), student/intern title (-20), unsubscribe (-50)",
+          "Score threshold for MQL: typically 40–60 points depending on your sales cycle",
+          "Automatic enrollment in SDR sequence when score crosses MQL threshold"
+        ]
+      },
+      {
+        heading: "2. Deal stage automation with task creation",
+        body: [
+          "Every deal stage transition should trigger the right follow-up tasks automatically. When a deal moves to 'Proposal Sent', HubSpot should create a follow-up task for 3 business days later, send a confirmation email to the prospect, and notify the account manager via Slack. When a deal moves to 'Closed Won', it should trigger onboarding sequence enrollment and create a customer record.",
+          "Stop relying on reps to manually create follow-up tasks — they forget, especially during busy periods. Encode your sales process into HubSpot workflows so the CRM drives the process rather than documenting it after the fact."
+        ],
+        list: [
+          "Discovery call booked → send pre-call questionnaire, create prep task for rep",
+          "Proposal sent → auto-follow-up task at +3 days, internal Slack notification",
+          "Negotiation → alert deal owner, create pricing approval task if discount > 15%",
+          "Closed Won → enroll in onboarding sequence, create project in project management tool",
+          "Closed Lost → enroll in 6-month re-engagement sequence, log loss reason"
+        ]
+      },
+      {
+        heading: "3. Automated lead routing by territory or product",
+        body: [
+          "Manual lead assignment is a silent revenue killer. Leads that sit unassigned for more than 5 minutes convert at dramatically lower rates than leads contacted within 1 minute. HubSpot's round-robin and rules-based assignment workflows eliminate this delay.",
+          "Set up routing rules based on deal value (enterprise leads go to senior AEs), geography (US West Coast to one team, EMEA to another), or product line (automation leads to the automation team, web leads to the web team). Add an SLA enforcement workflow that escalates uncontacted leads after 15 minutes with a manager notification."
+        ],
+        highlight: "MIT Lead Response Study: the odds of qualifying a lead decrease by 21x when you wait 30 minutes vs. 5 minutes to follow up. Automated lead routing eliminates the assignment delay — the rep gets a Slack ping and a task created the moment the lead arrives."
+      },
+      {
+        heading: "4. Contact data enrichment on creation",
+        body: [
+          "Raw leads rarely have complete data — they typically submit a name, email, and maybe a company name. HubSpot workflows can trigger enrichment automatically: connect to Clearbit, Apollo, or Hunter via webhook to populate company size, industry, LinkedIn URL, phone number, and technographic data the moment a contact is created.",
+          "With n8n as the middleware, you can build a multi-source enrichment pipeline: try Clearbit first, fall back to Apollo if Clearbit has no record, then use Hunter to find verified email addresses for contacts who only submitted a first name and company. All enrichment data writes back to HubSpot contact properties automatically."
+        ]
+      },
+      {
+        heading: "5. Email sequence enrollment based on CRM activity",
+        body: [
+          "HubSpot sequences are more powerful when enrollment is triggered by CRM events rather than manual action. Connect your sequence enrollment to specific deal stage changes, contact property updates, or lead score thresholds. A contact who downloads your case study should immediately enter a 5-email educational sequence — without a rep having to remember to enroll them.",
+          "Structure your sequences around buyer journey stages: awareness (educational content), consideration (comparison and ROI content), decision (demo offers and case studies). Use HubSpot's IF/THEN branching to send different email paths based on contact properties like company size or industry."
+        ],
+        list: [
+          "MQL trigger → 7-email nurture sequence over 21 days with educational content",
+          "Pricing page 2+ visits → high-intent sequence with demo offer and urgency",
+          "Trade show contact → post-event follow-up sequence within 24 hours",
+          "Webinar attendee → replay + related content sequence starting 1 hour post-event",
+          "Trial user no login after day 3 → activation sequence with help offer"
+        ]
+      },
+      {
+        heading: "6. Renewal and upsell triggers for existing customers",
+        body: [
+          "Most HubSpot automation focuses on new business, but renewal and expansion revenue is where the ROI truly compounds. Set up a renewal workflow that fires 90 days before contract end: creates a renewal task for the CSM, enrolls the customer in a value recap email sequence, and schedules a QBR if ACV exceeds your threshold.",
+          "For upsell triggers, monitor product usage data (synced to HubSpot via webhook from your product database) and fire expansion workflows when customers hit usage thresholds that suggest they're ready for the next tier. A customer using 90% of their seat allocation for two consecutive months is a natural upsell conversation."
+        ]
+      },
+      {
+        heading: "7. HubSpot + n8n: extending automation beyond native limits",
+        body: [
+          "HubSpot's native workflow builder is powerful but limited in complexity — you can't easily call external APIs, run conditional logic across multiple systems, or build multi-branch pipelines. This is where connecting HubSpot to n8n via webhooks unlocks a completely different level of automation.",
+          "Common HubSpot + n8n patterns: trigger a complex enrichment pipeline from a deal stage change, sync deal data bi-directionally with a project management tool, run an AI analysis of deal notes to suggest next steps, or send personalized video messages via Vidyard when a high-value prospect requests a demo. HubSpot fires the trigger; n8n handles the multi-step execution."
+        ],
+        highlight: "A SaaS company we built this for saw 34% improvement in sales cycle length after implementing the HubSpot + n8n pipeline. Reps stopped doing manual research and data entry — the system did it for them, and they arrived at every call with a complete picture of the prospect."
+      },
+      {
+        heading: "8. Internal notification and coaching workflows",
+        body: [
+          "Automation isn't just customer-facing — some of the most valuable HubSpot workflows are internal. Build a stalled deal alert that fires when a deal hasn't had an activity logged in 7 days. Create a coach notification when a new rep closes their first deal (celebrate it). Alert your VP of Sales when any deal over $50K moves to 'Closed Lost' so they can do a same-day debrief.",
+          "These internal workflows turn HubSpot from a passive data store into an active coaching and management tool — surfacing the moments that matter before they become missed opportunities."
+        ]
+      },
+      {
+        heading: "9. Customer satisfaction and NPS triggers",
+        body: [
+          "Connect your NPS or CSAT tool (Delighted, Typeform, or HubSpot's native surveys) back to contact records and trigger workflows based on score. A promoter (9–10 NPS) should get an automated ask for a G2 or Google review within 24 hours of responding — this is when their goodwill is highest. A detractor (0–6) should create an urgent task for their CSM to call same-day.",
+          "HubSpot stores the NPS score as a contact property, which means you can segment your entire database by satisfaction level and run targeted campaigns for each cohort."
+        ]
+      },
+      {
+        heading: "10. Reporting and pipeline review automation",
+        body: [
+          "End the manual Monday morning pipeline review. Build a HubSpot workflow (or n8n schedule) that runs every Friday at 4pm, pulls all open deals from the HubSpot API, calculates weighted pipeline by stage, flags deals with no activity in the past 5 days, and sends a formatted Slack message to your sales channel with the weekly snapshot.",
+          "Add a monthly digest that compares new vs. churned MRR, win rate by lead source, average deal cycle by segment, and rep performance. When data is automatically surfaced on a schedule, it drives consistent action — the decisions that move pipeline don't get lost in busy weeks."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "self-hosted-n8n-production-setup",
+    title: "How to Self-Host n8n in Production: Complete Server Setup, SSL, and Scaling Guide",
+    description: "A step-by-step technical guide to deploying n8n on a VPS with Docker, Nginx, SSL certificates, database backups, and queue mode for production-grade reliability — without paying for n8n Cloud.",
+    excerpt: "n8n Cloud costs $50–$500/month. A self-hosted n8n instance on a $10 VPS handles thousands of workflow executions per day. Here's the complete production setup guide.",
+    publishedAt: "2026-04-03",
+    category: "Infrastructure",
+    readingTime: "12 min read",
+    tags: ["n8n", "Self-Hosting", "VPS", "Docker", "Infrastructure"],
+    featured: false,
+    content: [
+      {
+        body: [
+          "n8n Cloud is convenient, but at $50/month for the Starter plan and $500/month for the Enterprise tier, the costs add up fast — especially when your workflows scale into the tens of thousands of executions per month. Self-hosting n8n on a VPS gives you the full platform with no execution limits, complete data control, and infrastructure costs of $10–$40/month depending on load.",
+          "This guide covers everything you need: choosing and sizing a VPS, installing Docker, configuring n8n with PostgreSQL, setting up Nginx as a reverse proxy with SSL, configuring environment variables, setting up database backups, and enabling queue mode for high-volume workflows. By the end, you'll have a production-ready n8n instance that handles serious workloads reliably."
+        ]
+      },
+      {
+        heading: "Server sizing and VPS selection",
+        body: [
+          "For most teams running 10–50 active workflows with moderate execution volume (under 10,000 executions/day), a 2 vCPU / 4GB RAM VPS is sufficient. Start here and scale up only when you see CPU or memory pressure. Popular providers: Hetzner (best price/performance in Europe), DigitalOcean (reliable, good documentation), Vultr (strong US presence), or AWS EC2 t3.medium for teams already on AWS.",
+          "Choose Ubuntu 22.04 LTS as your OS — it has the widest support for Docker and the most community documentation. Make sure you get SSD storage (not HDD) and at least 40GB disk — n8n logs and execution history can grow significantly over time."
+        ],
+        list: [
+          "Small workload (< 5,000 executions/day): 1 vCPU / 2GB RAM / 20GB SSD — Hetzner CX21 at €4.51/month",
+          "Medium workload (5,000–50,000 executions/day): 2 vCPU / 4GB RAM / 40GB SSD — Hetzner CX31 at €9.81/month",
+          "High workload (50,000+ executions/day): 4 vCPU / 8GB RAM / 80GB SSD + queue mode — Hetzner CX41 at €18.91/month",
+          "Enterprise (100,000+ executions/day): queue mode + Redis + 8 vCPU / 16GB RAM or dedicated server"
+        ]
+      },
+      {
+        heading: "Docker and Docker Compose setup",
+        body: [
+          "Docker is the recommended deployment method for n8n — it isolates dependencies, simplifies upgrades, and makes backup/restore straightforward. Install Docker via the official convenience script: `curl -fsSL https://get.docker.com | sh`, then add your user to the docker group with `usermod -aG docker $USER`.",
+          "Create a dedicated directory for your n8n installation at `/opt/n8n` and a `docker-compose.yml` file. Use PostgreSQL as your database (not SQLite) for production — SQLite is fine for testing but lacks concurrent access support and backup tooling. Mount your PostgreSQL data and n8n configuration to persistent volumes on the host."
+        ],
+        list: [
+          "Install Docker: curl -fsSL https://get.docker.com | sh",
+          "Install Docker Compose plugin: apt-get install docker-compose-plugin",
+          "Create app directory: mkdir -p /opt/n8n && cd /opt/n8n",
+          "Create docker-compose.yml with n8n + PostgreSQL services",
+          "Create .env file with all secrets and configuration values",
+          "Run: docker compose up -d to start services"
+        ]
+      },
+      {
+        heading: "Essential environment variables",
+        body: [
+          "n8n's behavior is controlled entirely through environment variables. The critical ones to configure: `N8N_HOST` (your domain), `N8N_PORT` (5678 internally), `N8N_PROTOCOL` (https), `DB_TYPE` (postgresdb), `DB_POSTGRESDB_HOST`, `DB_POSTGRESDB_USER`, `DB_POSTGRESDB_PASSWORD`, `N8N_ENCRYPTION_KEY` (a random 32-char string — generate once and never change), and `WEBHOOK_URL` (your full domain URL).",
+          "Security-critical settings to never skip: `N8N_BASIC_AUTH_ACTIVE=true` with a strong username/password until you set up proper user management, `N8N_SECURE_COOKIE=true`, and `EXECUTIONS_DATA_PRUNE=true` with `EXECUTIONS_DATA_MAX_AGE=168` (7 days) to prevent disk exhaustion from execution logs."
+        ],
+        highlight: "Never change your N8N_ENCRYPTION_KEY after first run. All credentials stored in n8n are encrypted with this key. If you lose it or change it, every saved credential becomes unreadable and you'll need to re-enter them all manually."
+      },
+      {
+        heading: "Nginx reverse proxy and SSL configuration",
+        body: [
+          "n8n runs on port 5678 internally. Nginx proxies public HTTPS traffic on port 443 to n8n, handles SSL termination, and adds security headers. Install Nginx with `apt install nginx`, then install Certbot for Let's Encrypt SSL: `apt install certbot python3-certbot-nginx`.",
+          "Your Nginx server block needs: `proxy_pass http://localhost:5678`, `proxy_http_version 1.1`, `proxy_set_header Upgrade $http_upgrade` and `proxy_set_header Connection 'upgrade'` for WebSocket support (n8n uses WebSockets for the UI). Run `certbot --nginx -d your-domain.com` to auto-configure SSL and set up auto-renewal. Test with `nginx -t` before reload."
+        ],
+        list: [
+          "Install Nginx: apt install nginx",
+          "Install Certbot: apt install certbot python3-certbot-nginx",
+          "Create server block at /etc/nginx/sites-available/n8n",
+          "Enable site: ln -s /etc/nginx/sites-available/n8n /etc/nginx/sites-enabled/",
+          "Issue SSL certificate: certbot --nginx -d yourdomain.com",
+          "Verify auto-renewal: certbot renew --dry-run"
+        ]
+      },
+      {
+        heading: "Database backup strategy",
+        body: [
+          "Production n8n without automated backups is a risk not worth taking. Your workflows, credentials, and execution history all live in the PostgreSQL database — and n8n doesn't have a built-in backup feature. Set up a cron job that dumps the database nightly and uploads to S3 or Backblaze B2.",
+          "The backup script: `pg_dump -U n8n_user n8n_database | gzip > /backups/n8n_$(date +%Y%m%d).sql.gz`, then `aws s3 cp /backups/n8n_$(date +%Y%m%d).sql.gz s3://your-bucket/n8n-backups/`. Keep 7 daily and 4 weekly backups. Test restoration monthly — a backup you've never restored is a backup you don't actually have."
+        ]
+      },
+      {
+        heading: "Queue mode for high-volume workflows",
+        body: [
+          "Default n8n runs all workflow executions in the main process. At high execution volume, this creates a bottleneck — long-running workflows block others. Queue mode separates the scheduler (main process) from the executors (worker processes) using Redis as the message queue, allowing you to run multiple parallel workers.",
+          "Enable queue mode by setting `EXECUTIONS_MODE=queue` and `QUEUE_BULL_REDIS_HOST=localhost` in your environment. Install Redis: `apt install redis-server`. Spin up worker processes with `n8n worker` as additional Docker services. Each worker handles executions independently — you can scale to 10+ workers on a single server or distribute across machines."
+        ],
+        highlight: "One of our clients processes 200,000+ workflow executions per day on a €40/month Hetzner server running n8n in queue mode with 8 workers. The same workload on n8n Cloud would cost $2,000+/month. Total annual savings: over $23,000."
+      },
+      {
+        heading: "Ongoing maintenance checklist",
+        body: [
+          "Self-hosting means you own the maintenance. These tasks keep your instance healthy: weekly — check disk usage (execution logs grow fast), review error logs for workflow failures, validate that backups completed. Monthly — update n8n by pulling the new Docker image and running `docker compose up -d --pull always`, review and rotate API credentials, check SSL certificate expiry (Certbot auto-renews but verify).",
+          "Set up uptime monitoring via UptimeRobot (free) to alert you if n8n goes down. Configure a dead man's switch: a test workflow that runs every 5 minutes and pings a monitoring endpoint — if the ping stops, you get alerted immediately."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "wordpress-to-nextjs-migration-2026",
+    title: "WordPress to Next.js Migration in 2026: The Complete Technical Playbook",
+    description: "A step-by-step technical guide to migrating from WordPress to Next.js — covering content extraction, URL redirects, SEO preservation, performance gains, and the tools and timeline you need.",
+    excerpt: "WordPress sites routinely score 30–50 on Google PageSpeed. Next.js sites score 90–100. Migration is complex but the performance and maintenance payoff is substantial. Here's the full playbook.",
+    publishedAt: "2026-04-05",
+    category: "Web Development",
+    readingTime: "11 min read",
+    tags: ["WordPress", "Next.js", "Migration", "SEO", "Web Performance"],
+    featured: false,
+    content: [
+      {
+        body: [
+          "WordPress powers 43% of the internet — and a significant portion of those sites are being slowly strangled by plugin bloat, PHP hosting costs, security patches, and mobile performance scores that have become an embarrassment in a world where Google treats Core Web Vitals as a ranking factor.",
+          "Next.js has emerged as the dominant migration target for WordPress sites because it delivers what WordPress can't: sub-second page loads, built-in SEO primitives, TypeScript safety, and a deployment model (Vercel) that eliminates server management entirely. This guide covers the full migration process from content extraction to post-launch SEO monitoring."
+        ]
+      },
+      {
+        heading: "Why migrate from WordPress in 2026",
+        body: [
+          "The case for migration has never been stronger. WordPress sites average a 42/100 on Google PageSpeed Mobile — a score that actively suppresses search rankings. The typical WordPress installation has 15–25 plugins, each introducing security vulnerabilities, performance overhead, and update maintenance. Hosting costs for a properly spec'd WordPress server (enough RAM to avoid PHP-FPM crashes under load) run $30–$100/month for a medium traffic site.",
+          "A Next.js site on Vercel costs $0–$20/month for the same traffic, loads in under 500ms, has zero plugin surface area, and deploys in seconds via git push. The maintenance overhead drops from weekly to quarterly. For content-heavy sites, the question isn't whether to migrate — it's when."
+        ],
+        list: [
+          "Performance: WordPress 42/100 PageSpeed → Next.js 92/100 average after migration",
+          "Security: eliminates WordPress/plugin CVEs, no PHP attack surface",
+          "Cost: $30–$100/month WordPress hosting → $0–$20/month on Vercel",
+          "Developer experience: TypeScript, hot reload, component-based architecture",
+          "SEO: Next.js App Router has metadata API, structured data, and sitemap built-in"
+        ]
+      },
+      {
+        heading: "Phase 1: Content audit and migration planning",
+        body: [
+          "Before writing a line of code, export and inventory your WordPress content. Use the WordPress XML export (Tools → Export → All Content) to get every post, page, category, tag, and custom post type in one file. Run a URL crawl with Screaming Frog to capture every indexed URL — this becomes your redirect map.",
+          "Categorize content into: (1) pages to migrate as-is, (2) pages to rewrite/improve, (3) pages to consolidate, and (4) pages to deprecate. This is your opportunity to cut the technical debt of years of random WordPress content. A smaller, well-structured site outperforms a bloated one in both performance and SEO."
+        ],
+        list: [
+          "Export WordPress XML (all content, all post types)",
+          "Crawl site with Screaming Frog — export all URLs, status codes, titles, meta descriptions",
+          "Export Google Search Console performance data to identify high-value URLs",
+          "Map all indexed URLs to migration decision: migrate / rewrite / consolidate / deprecate",
+          "Document all WordPress features in use (WooCommerce? Membership? Forms?) — each needs a Next.js replacement"
+        ]
+      },
+      {
+        heading: "Phase 2: Content extraction and transformation",
+        body: [
+          "WordPress post content is stored as HTML in the database — not as structured JSON. To convert it into a Next.js-friendly format, use the WPGraphQL plugin to expose your WordPress content via GraphQL API, then write a Node.js extraction script that pulls all posts and pages and transforms the HTML content into your chosen format (MDX, JSON, or a headless CMS like Sanity or Contentful).",
+          "For blog-heavy sites (under 500 posts), storing content as MDX files in the repository is simple and eliminates the CMS dependency. For sites with active editorial teams or 500+ posts, a headless CMS gives you a familiar editing UI while Next.js handles rendering. We typically use Sanity for large editorial sites and file-based MDX for smaller ones."
+        ],
+        highlight: "The biggest migration mistake: treating WordPress HTML as structured content. WordPress post HTML is messy — inline styles, absolute URLs, legacy shortcodes, and outdated image formats. Build a transformation layer that cleans and normalizes content during extraction, not after."
+      },
+      {
+        heading: "Phase 3: URL structure and redirect mapping",
+        body: [
+          "Preserving URL structure is the single most important SEO task in a migration. Every URL change without a 301 redirect is a lost backlink and a potential ranking drop. Map every old URL to its new URL in a spreadsheet, then implement all redirects in Next.js's `next.config.js` redirects array or via Vercel's redirect rules.",
+          "For sites with complex permalink structures (/category/year/month/slug), the redirect map can be hundreds of lines. Automate the mapping where patterns are consistent, and manually verify the high-value URLs (anything ranking on page 1 for a target keyword). Use Google Search Console's URL Inspection tool after launch to confirm Google is processing your redirects correctly."
+        ],
+        list: [
+          "Map all 301 redirects from old WordPress URLs to new Next.js URLs",
+          "Preserve exact slugs wherever possible — /blog/post-title → /blog/post-title requires no redirect",
+          "Handle WordPress category archives (/category/automation/) → equivalent Next.js filtered views",
+          "Handle tag pages, date archives, author pages if they have SEO value",
+          "Implement redirects in next.config.js redirects array (permanent: true)"
+        ]
+      },
+      {
+        heading: "Phase 4: Building the Next.js site",
+        body: [
+          "Use the Next.js App Router (not Pages Router) for new projects in 2026 — it has better SEO primitives, server components for performance, and is the direction of active Next.js development. Structure your routes to mirror your WordPress taxonomy: `/blog/[slug]` for posts, `/services/[service]` for service pages, `/[page]` for standalone pages.",
+          "The metadata API in Next.js App Router replaces react-helmet and WordPress's Yoast — use `generateMetadata()` in each route's `page.tsx` to produce dynamic, data-driven `<title>`, `<meta description>`, Open Graph, and Twitter Card tags. For structured data (Article, Organization, FAQ), inject JSON-LD via a `<script type='application/ld+json'>` tag in your layout."
+        ],
+        list: [
+          "Initialize with: npx create-next-app@latest --typescript --tailwind --app",
+          "Build layout.tsx with global metadata, structured data, and navigation",
+          "Create dynamic [slug] routes for blog posts, services, and other content types",
+          "Implement generateStaticParams() for static generation of all content pages",
+          "Add sitemap.ts and robots.ts using Next.js built-in handlers",
+          "Integrate image optimization — replace WordPress media URLs with next/image components"
+        ]
+      },
+      {
+        heading: "Phase 5: SEO preservation and post-launch monitoring",
+        body: [
+          "Before launching, run the new site through a checklist: all redirects tested, sitemap.xml accessible, robots.txt correct, no soft 404s, all canonical tags pointing to the right URLs, structured data validates in Google's Rich Results Test, and Core Web Vitals pass in both PageSpeed Insights and Lighthouse.",
+          "After launch, submit the new sitemap in Google Search Console and monitor the Index Coverage report daily for the first two weeks. Watch your ranking positions via Ahrefs or SEMrush for the 20–30 most important keywords. Expect slight volatility in the first 2–3 weeks as Google re-crawls and re-indexes — this is normal. Significant ranking drops after week 4 indicate a redirect or canonical tag issue that needs investigation."
+        ],
+        highlight: "Across 12 WordPress to Next.js migrations we've completed, average PageSpeed Mobile score improved from 41 to 94. Organic traffic increased 15–40% over the 6 months following migration, driven by Core Web Vitals improvement and faster indexing of new content."
+      },
+      {
+        heading: "Choosing a migration partner",
+        body: [
+          "WordPress to Next.js migration is a technically demanding project — it combines content transformation, frontend development, SEO strategy, and infrastructure work. Most agencies either have strong WordPress expertise or strong Next.js expertise, but rarely both. Look for a partner who has completed multiple migrations (not just Next.js projects) and can show you before/after PageSpeed and ranking data.",
+          "A complete migration for a 50-page site with a blog takes 6–10 weeks for a skilled team. Larger sites (200+ pages, WooCommerce, membership areas) take 3–6 months. The investment pays back in reduced hosting costs, eliminated maintenance overhead, and organic traffic growth — typically within 12–18 months for sites with meaningful SEO presence."
+        ]
+      }
+    ]
   }
 ];
 

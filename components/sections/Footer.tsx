@@ -58,6 +58,9 @@ export function Footer() {
                         <a href="https://vidtoreels.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
                             vidtoreels.com
                         </a>
+                        <a href="https://gophotobook.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                            gophotobook.com
+                        </a>
                     </div>
 
                     <div className="flex flex-col gap-2 text-sm">
