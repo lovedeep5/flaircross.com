@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
       .from("profiles")
       .select("stripe_customer_id")
       .eq("id", user.id)
-      .single();
+      .maybeSingle();
 
     let customerId = profile?.stripe_customer_id;
     if (!customerId) {
