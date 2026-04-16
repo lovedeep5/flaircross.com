@@ -134,8 +134,17 @@ export default async function AdminDashboard() {
         <Link href="/admin/products/new" className="px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors">
           + New Product
         </Link>
+        <Link href="/admin/blog/new" className="px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors">
+          + New Post
+        </Link>
         <Link href="/admin/users" className="px-4 py-2 border rounded-lg text-sm font-medium hover:bg-accent transition-colors">
           Manage Users
+        </Link>
+        <Link href="/admin/blog" className="px-4 py-2 border rounded-lg text-sm font-medium hover:bg-accent transition-colors">
+          Manage Blog
+        </Link>
+        <Link href="/admin/api-keys" className="px-4 py-2 border rounded-lg text-sm font-medium hover:bg-accent transition-colors">
+          API Keys
         </Link>
         <Link href="/shop" target="_blank" className="px-4 py-2 border rounded-lg text-sm font-medium hover:bg-accent transition-colors">
           View Shop ↗

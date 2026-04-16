@@ -3,8 +3,10 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ArrowLeft, ArrowRight, CalendarClock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ReactMarkdown from "react-markdown";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 
-import { blogPosts, getPostBySlug } from "@/lib/blogPosts";
+export const revalidate = 3600;
 
 const formatter = new Intl.DateTimeFormat("en-US", {
   month: "long",
@@ -18,36 +20,45 @@ type BlogPostPageProps = {
   }>;
 };
 
-export function generateStaticParams() {
-  return blogPosts.map((post) => ({ slug: post.slug }));
+export async function generateStaticParams() {
+  const { data } = await supabaseAdmin
+    .from("blog_posts")
+    .select("slug")
+    .eq("status", "published");
+  return (data ?? []).map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({
   params,
 }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const { data: post } = await supabaseAdmin
+    .from("blog_posts")
+    .select("title, description, tags, published_at, updated_at")
+    .eq("slug", slug)
+    .eq("status", "published")
+    .single();
 
   if (!post) {
     return { title: "FlairCross Blog" };
   }
 
-  const publishedTime = new Date(post.publishedAt).toISOString();
+  const publishedTime = new Date(post.published_at).toISOString();
 
   return {
     title: `${post.title} | FlairCross Blog`,
     description: post.description,
     alternates: {
-      canonical: `https://flarecross.com/blog/${post.slug}`,
+      canonical: `https://flarecross.com/blog/${slug}`,
     },
     openGraph: {
       title: post.title,
       description: post.description,
       type: "article",
       publishedTime,
-      url: `https://flarecross.com/blog/${post.slug}`,
+      url: `https://flarecross.com/blog/${slug}`,
       siteName: "FlairCross Consultants",
-      tags: post.tags,
+      tags: post.tags ?? [],
       images: [
         {
           url: "/og-image.png",
@@ -68,19 +79,35 @@ export async function generateMetadata({
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+
+  const { data: post } = await supabaseAdmin
+    .from("blog_posts")
+    .select("*")
+    .eq("slug", slug)
+    .eq("status", "published")
+    .single();
 
   if (!post) {
     notFound();
   }
+
+  const { data: relatedData } = await supabaseAdmin
+    .from("blog_posts")
+    .select("slug, title, excerpt, category")
+    .eq("status", "published")
+    .neq("slug", slug)
+    .order("published_at", { ascending: false })
+    .limit(2);
+
+  const relatedPosts = relatedData ?? [];
 
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: post.title,
     description: post.description,
-    datePublished: new Date(post.publishedAt).toISOString(),
-    dateModified: new Date(post.updatedAt ?? post.publishedAt).toISOString(),
+    datePublished: new Date(post.published_at).toISOString(),
+    dateModified: new Date(post.updated_at ?? post.published_at).toISOString(),
     author: {
       "@type": "Organization",
       name: "FlairCross Consultants",
@@ -100,14 +127,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       "@type": "WebPage",
       "@id": `https://flarecross.com/blog/${post.slug}`,
     },
-    keywords: post.tags.join(", "),
+    keywords: (post.tags ?? []).join(", "),
   };
-
-  // Other posts for suggested reading
-  const relatedPosts = blogPosts
-    .filter((p) => p.slug !== post.slug)
-    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
-    .slice(0, 2);
 
   return (
     <main className="pt-28 pb-12 md:pb-20">
@@ -138,11 +159,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground border-t border-b py-4 mb-10">
             <span className="inline-flex items-center gap-2">
               <CalendarClock className="h-4 w-4" />
-              {formatter.format(new Date(post.publishedAt))}
+              {post.published_at ? formatter.format(new Date(post.published_at)) : ""}
             </span>
-            <span>{post.readingTime}</span>
+            <span>{post.reading_time}</span>
             <div className="flex flex-wrap gap-2">
-              {post.tags.map((tag) => (
+              {(post.tags ?? []).map((tag: string) => (
                 <span
                   key={tag}
                   className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold"
@@ -153,38 +174,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
           </div>
 
-          <div className="space-y-10">
-            {post.content.map((block, index) => (
-              <div key={`${post.slug}-${index}`}>
-                {block.heading && (
-                  <h2 className="text-2xl font-semibold mb-4">
-                    {block.heading}
-                  </h2>
-                )}
-                {block.body?.map((paragraph, idx) => (
-                  <p
-                    key={idx}
-                    className="text-lg leading-relaxed text-muted-foreground mb-4"
-                  >
-                    {paragraph}
-                  </p>
-                ))}
-                {block.list && (
-                  <ul className="list-disc pl-6 space-y-2 text-muted-foreground mb-4">
-                    {block.list.map((item, idx) => (
-                      <li key={idx} className="text-lg leading-relaxed">
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                {block.highlight && (
-                  <div className="mt-6 border-l-4 border-primary/60 bg-primary/5 p-4 rounded-r-xl text-base font-semibold">
-                    {block.highlight}
-                  </div>
-                )}
-              </div>
-            ))}
+          <div className="prose prose-lg prose-neutral dark:prose-invert max-w-none">
+            <ReactMarkdown>{post.content ?? ""}</ReactMarkdown>
           </div>
         </article>
 

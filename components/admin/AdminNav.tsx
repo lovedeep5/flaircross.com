@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { LayoutDashboard, Package, Users, ShoppingBag, CreditCard, Star, Briefcase, LogOut, Menu, X, Shield } from "lucide-react";
+import { LayoutDashboard, Package, Users, ShoppingBag, CreditCard, Star, Briefcase, BookOpen, Key, LogOut, Menu, X, Shield, Settings } from "lucide-react";
 
 const navItems = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
@@ -14,6 +14,9 @@ const navItems = [
   { label: "Subscriptions", href: "/admin/subscriptions", icon: CreditCard },
   { label: "Testimonials", href: "/admin/testimonials", icon: Star },
   { label: "Portfolio", href: "/admin/portfolio", icon: Briefcase },
+  { label: "Blog", href: "/admin/blog", icon: BookOpen },
+  { label: "API Keys", href: "/admin/api-keys", icon: Key },
+  { label: "Settings", href: "/admin/settings", icon: Settings },
 ];
 
 export function AdminNav({ user }: { user: { name: string; email: string } }) {

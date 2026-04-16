@@ -1,7 +1,9 @@
 import Link from "next/link";
-import { blogPosts } from "@/lib/blogPosts";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 import { ArrowRight, CalendarClock } from "lucide-react";
 import type { Metadata } from "next";
+
+export const revalidate = 60;
 
 const formatter = new Intl.DateTimeFormat("en-US", {
   month: "long",
@@ -55,12 +57,14 @@ const blogListJsonLd = {
   },
 };
 
-export default function BlogPage() {
-  const posts = [...blogPosts].sort(
-    (a, b) =>
-      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-  );
+export default async function BlogPage() {
+  const { data } = await supabaseAdmin
+    .from("blog_posts")
+    .select("slug, title, excerpt, category, reading_time, tags, featured, published_at")
+    .eq("status", "published")
+    .order("published_at", { ascending: false });
 
+  const posts = data ?? [];
   const featured = posts.filter((p) => p.featured);
   const rest = posts.filter((p) => !p.featured);
 
@@ -101,7 +105,7 @@ export default function BlogPage() {
                     <span>{post.category}</span>
                     <span className="inline-flex items-center gap-1">
                       <CalendarClock className="h-3.5 w-3.5" />
-                      {formatter.format(new Date(post.publishedAt))}
+                      {post.published_at ? formatter.format(new Date(post.published_at)) : ""}
                     </span>
                   </div>
                   <h2 className="text-2xl font-semibold mt-5 mb-3 group-hover:text-primary transition-colors">
@@ -109,7 +113,7 @@ export default function BlogPage() {
                   </h2>
                   <p className="text-muted-foreground mb-6">{post.excerpt}</p>
                   <div className="flex flex-wrap gap-2 mb-8">
-                    {post.tags.map((tag) => (
+                    {(post.tags ?? []).map((tag: string) => (
                       <span
                         key={tag}
                         className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary"
@@ -145,7 +149,7 @@ export default function BlogPage() {
                     <span>{post.category}</span>
                     <span className="inline-flex items-center gap-1">
                       <CalendarClock className="h-3.5 w-3.5" />
-                      {formatter.format(new Date(post.publishedAt))}
+                      {post.published_at ? formatter.format(new Date(post.published_at)) : ""}
                     </span>
                   </div>
                   <h2 className="text-2xl font-semibold mt-5 mb-3 group-hover:text-primary transition-colors">
@@ -153,7 +157,7 @@ export default function BlogPage() {
                   </h2>
                   <p className="text-muted-foreground mb-6">{post.excerpt}</p>
                   <div className="flex flex-wrap gap-2 mb-8">
-                    {post.tags.map((tag) => (
+                    {(post.tags ?? []).map((tag: string) => (
                       <span
                         key={tag}
                         className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary"
@@ -172,6 +176,10 @@ export default function BlogPage() {
               ))}
             </div>
           </>
+        )}
+
+        {posts.length === 0 && (
+          <p className="text-muted-foreground">No posts published yet. Check back soon.</p>
         )}
       </div>
     </main>

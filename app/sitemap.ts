@@ -1,11 +1,21 @@
 import { MetadataRoute } from "next";
-import { blogPosts } from "@/lib/blogPosts";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const blogEntries: MetadataRoute.Sitemap = blogPosts.map((post) => ({
+  let publishedPosts: { slug: string; updated_at: string; published_at: string }[] | null = null;
+  try {
+    const result = await supabaseAdmin
+      .from("blog_posts")
+      .select("slug, updated_at, published_at")
+      .eq("status", "published");
+    publishedPosts = result.data;
+  } catch {
+    // Skip blog entries if DB not available
+  }
+
+  const blogEntries: MetadataRoute.Sitemap = (publishedPosts ?? []).map((post) => ({
     url: `https://flarecross.com/blog/${post.slug}`,
-    lastModified: new Date(post.updatedAt ?? post.publishedAt),
+    lastModified: new Date(post.updated_at ?? post.published_at),
     changeFrequency: "monthly",
     priority: 0.7,
   }));
