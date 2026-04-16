@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { supabaseAdmin } from "@/lib/supabase/admin";
-import { stripe } from "@/lib/stripe";
+import { stripe, isStripeTestMode } from "@/lib/stripe";
 
 export async function POST(req: NextRequest) {
   try {
@@ -33,20 +33,24 @@ export async function POST(req: NextRequest) {
     if (!price) return NextResponse.json({ error: "Price not found" }, { status: 404 });
 
     // Get or create Stripe customer
+    // In test mode, always create a fresh customer (test IDs differ from live IDs)
+    const testMode = isStripeTestMode();
     const { data: profile } = await supabaseAdmin
       .from("profiles")
       .select("stripe_customer_id")
       .eq("id", user.id)
       .maybeSingle();
 
-    let customerId = profile?.stripe_customer_id;
+    let customerId = testMode ? undefined : profile?.stripe_customer_id;
     if (!customerId) {
       const customer = await stripe.customers.create({
         email: user.email,
         metadata: { supabase_user_id: user.id },
       });
       customerId = customer.id;
-      await supabaseAdmin.from("profiles").update({ stripe_customer_id: customerId }).eq("id", user.id);
+      if (!testMode) {
+        await supabaseAdmin.from("profiles").update({ stripe_customer_id: customerId }).eq("id", user.id);
+      }
     }
 
     const origin = process.env.NEXT_PUBLIC_APP_URL?.trim() || req.nextUrl.origin;
