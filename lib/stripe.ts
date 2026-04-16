@@ -29,18 +29,18 @@ function getTestStripe(): Stripe {
 }
 
 function refreshModeCache(): void {
-  supabaseAdmin
-    .from("app_settings")
-    .select("value")
-    .eq("key", "stripe_test_mode")
-    .single()
-    .then(({ data }) => {
-      const testMode = data?.value === "true";
-      _modeCache = { testMode, fetchedAt: Date.now() };
-    })
-    .catch(() => {
+  (async () => {
+    try {
+      const { data } = await supabaseAdmin
+        .from("app_settings")
+        .select("value")
+        .eq("key", "stripe_test_mode")
+        .single();
+      _modeCache = { testMode: data?.value === "true", fetchedAt: Date.now() };
+    } catch {
       // Keep existing cache or fall back to env default on next call
-    });
+    }
+  })();
 }
 
 function getStripe(): Stripe {
