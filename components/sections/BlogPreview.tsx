@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, CalendarClock } from "lucide-react";
-import { getFeaturedPosts } from "@/lib/blogPosts";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 
 const formatter = new Intl.DateTimeFormat("en-US", {
   month: "short",
@@ -8,8 +8,18 @@ const formatter = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
 });
 
-export function BlogPreview() {
-  const featuredPosts = getFeaturedPosts(3);
+export async function BlogPreview() {
+  const { data } = await supabaseAdmin
+    .from("blog_posts")
+    .select("slug, title, excerpt, category, tags, published_at")
+    .eq("status", "published")
+    .eq("featured", true)
+    .order("published_at", { ascending: false })
+    .limit(3);
+
+  const posts = data ?? [];
+
+  if (posts.length === 0) return null;
 
   return (
     <section id="blog" className="py-24 bg-muted/20">
@@ -37,7 +47,7 @@ export function BlogPreview() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {featuredPosts.map((post) => (
+          {posts.map((post) => (
             <article
               key={post.slug}
               className="group border rounded-2xl p-6 h-full bg-card shadow-sm hover:-translate-y-1 hover:shadow-lg transition-all"
@@ -46,15 +56,17 @@ export function BlogPreview() {
                 <span>{post.category}</span>
                 <span className="inline-flex items-center gap-1">
                   <CalendarClock className="h-3.5 w-3.5" />
-                  {formatter.format(new Date(post.publishedAt))}
+                  {post.published_at ? formatter.format(new Date(post.published_at)) : ""}
                 </span>
               </div>
-              <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
-                {post.title}
-              </h3>
+              <Link href={`/blog/${post.slug}`}>
+                <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
+                  {post.title}
+                </h3>
+              </Link>
               <p className="text-muted-foreground mb-6">{post.excerpt}</p>
               <div className="flex flex-wrap gap-2 mb-6">
-                {post.tags.map((tag) => (
+                {(post.tags ?? []).map((tag: string) => (
                   <span
                     key={tag}
                     className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary"

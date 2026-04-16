@@ -108,9 +108,11 @@ export default async function BlogPage() {
                       {post.published_at ? formatter.format(new Date(post.published_at)) : ""}
                     </span>
                   </div>
-                  <h2 className="text-2xl font-semibold mt-5 mb-3 group-hover:text-primary transition-colors">
-                    {post.title}
-                  </h2>
+                  <Link href={`/blog/${post.slug}`}>
+                    <h2 className="text-2xl font-semibold mt-5 mb-3 group-hover:text-primary transition-colors">
+                      {post.title}
+                    </h2>
+                  </Link>
                   <p className="text-muted-foreground mb-6">{post.excerpt}</p>
                   <div className="flex flex-wrap gap-2 mb-8">
                     {(post.tags ?? []).map((tag: string) => (
@@ -152,9 +154,11 @@ export default async function BlogPage() {
                       {post.published_at ? formatter.format(new Date(post.published_at)) : ""}
                     </span>
                   </div>
-                  <h2 className="text-2xl font-semibold mt-5 mb-3 group-hover:text-primary transition-colors">
-                    {post.title}
-                  </h2>
+                  <Link href={`/blog/${post.slug}`}>
+                    <h2 className="text-2xl font-semibold mt-5 mb-3 group-hover:text-primary transition-colors">
+                      {post.title}
+                    </h2>
+                  </Link>
                   <p className="text-muted-foreground mb-6">{post.excerpt}</p>
                   <div className="flex flex-wrap gap-2 mb-8">
                     {(post.tags ?? []).map((tag: string) => (
