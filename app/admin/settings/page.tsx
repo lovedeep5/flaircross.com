@@ -4,13 +4,17 @@ import { StripeToggle } from "@/components/admin/StripeToggle";
 export const dynamic = "force-dynamic";
 
 export default async function SettingsPage() {
-  const { data } = await supabaseAdmin
-    .from("app_settings")
-    .select("value")
-    .eq("key", "stripe_test_mode")
-    .single();
-
-  const testMode = data?.value === "true";
+  let testMode = false;
+  try {
+    const { data } = await supabaseAdmin
+      .from("app_settings")
+      .select("value")
+      .eq("key", "stripe_test_mode")
+      .single();
+    testMode = data?.value === "true";
+  } catch {
+    // Default to false (live mode) if DB is unavailable
+  }
 
   return (
     <div className="space-y-8">

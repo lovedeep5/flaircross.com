@@ -44,7 +44,7 @@ export function AdminNav({ user }: { user: { name: string; email: string } }) {
         <p className="text-xs text-muted-foreground mt-1">Admin Dashboard</p>
       </div>
 
-      <nav className="flex-1 p-4 space-y-1">
+      <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
         {navItems.map(({ label, href, icon: Icon }) => (
           <Link
             key={href}
