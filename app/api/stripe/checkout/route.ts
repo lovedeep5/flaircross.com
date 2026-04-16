@@ -49,15 +49,15 @@ export async function POST(req: NextRequest) {
       await supabaseAdmin.from("profiles").update({ stripe_customer_id: customerId }).eq("id", user.id);
     }
 
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL!;
+    const origin = process.env.NEXT_PUBLIC_APP_URL?.trim() || req.nextUrl.origin;
     const isSubscription = !!price.interval;
 
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       mode: isSubscription ? "subscription" : "payment",
       line_items: [{ price: price.stripe_price_id, quantity: 1 }],
-      success_url: `${appUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${appUrl}/checkout/cancel`,
+      success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/checkout/cancel`,
       metadata: {
         supabase_user_id: user.id,
         product_id: productId,
