@@ -21,7 +21,7 @@ export function BuyButton({ productId, priceId, mode }: BuyButtonProps) {
     const res = await fetch("/api/stripe/checkout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ product_id: productId, price_id: priceId, mode }),
+      body: JSON.stringify({ productId, priceId, mode }),
     });
 
     const data = await res.json();
