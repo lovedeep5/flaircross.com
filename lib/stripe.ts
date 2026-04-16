@@ -1,14 +1,62 @@
 import Stripe from "stripe";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 
-let _stripe: Stripe | null = null;
+const API_VERSION = "2026-03-25.dahlia" as const;
 
-function getStripe() {
-  if (!_stripe) {
-    const key = process.env.STRIPE_SECRET_KEY?.trim().replace(/\s*#.*$/, "");
-    if (!key) throw new Error("Missing STRIPE_SECRET_KEY");
-    _stripe = new Stripe(key, { apiVersion: "2026-03-25.dahlia", typescript: true });
+let _liveStripe: Stripe | null = null;
+let _testStripe: Stripe | null = null;
+
+type ModeCache = { testMode: boolean; fetchedAt: number };
+let _modeCache: ModeCache | null = null;
+const MODE_TTL_MS = 30_000;
+
+function getLiveStripe(): Stripe {
+  if (!_liveStripe) {
+    const key = process.env.STRIPE_LIVE_SECRET_KEY?.trim();
+    if (!key) throw new Error("Missing STRIPE_LIVE_SECRET_KEY");
+    _liveStripe = new Stripe(key, { apiVersion: API_VERSION, typescript: true });
   }
-  return _stripe;
+  return _liveStripe;
+}
+
+function getTestStripe(): Stripe {
+  if (!_testStripe) {
+    const key = process.env.STRIPE_TEST_SECRET_KEY?.trim();
+    if (!key) throw new Error("Missing STRIPE_TEST_SECRET_KEY");
+    _testStripe = new Stripe(key, { apiVersion: API_VERSION, typescript: true });
+  }
+  return _testStripe;
+}
+
+function refreshModeCache(): void {
+  supabaseAdmin
+    .from("app_settings")
+    .select("value")
+    .eq("key", "stripe_test_mode")
+    .single()
+    .then(({ data }) => {
+      const testMode = data?.value === "true";
+      _modeCache = { testMode, fetchedAt: Date.now() };
+    })
+    .catch(() => {
+      // Keep existing cache or fall back to env default on next call
+    });
+}
+
+function getStripe(): Stripe {
+  const stale = !_modeCache || Date.now() - _modeCache.fetchedAt > MODE_TTL_MS;
+  if (stale) refreshModeCache();
+  const testMode = _modeCache?.testMode ?? (process.env.STRIPE_TEST_MODE === "true");
+  return testMode ? getTestStripe() : getLiveStripe();
+}
+
+// Called by the admin API route so the current process reflects the change immediately
+export function setStripeModeCache(testMode: boolean): void {
+  _modeCache = { testMode, fetchedAt: Date.now() };
+}
+
+export function isStripeTestMode(): boolean {
+  return _modeCache?.testMode ?? (process.env.STRIPE_TEST_MODE === "true");
 }
 
 // Proxy preserves `stripe.products.create(...)` syntax used across routes
