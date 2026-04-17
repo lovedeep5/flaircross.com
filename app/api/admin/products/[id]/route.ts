@@ -41,10 +41,11 @@ export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ 
 
     const { data: existing } = await supabaseAdmin.from("products").select("stripe_product_id").eq("id", id).single();
     if (existing?.stripe_product_id) {
-      await stripe.products.update(existing.stripe_product_id, { active: false });
+      try { await stripe.products.update(existing.stripe_product_id, { active: false }); } catch { /* ignore mode mismatch */ }
     }
 
-    await supabaseAdmin.from("products").update({ status: "archived" }).eq("id", id);
+    const { error } = await supabaseAdmin.from("products").delete().eq("id", id);
+    if (error) throw error;
     return NextResponse.json({ success: true });
   } catch (err) {
     const msg = err instanceof Error ? err.message : "Error";
