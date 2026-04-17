@@ -220,13 +220,29 @@ export function ProductForm({ initialData }: ProductFormProps) {
 
       {error && <p className="text-sm text-red-500 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg px-4 py-3">{error}</p>}
 
-      <div className="flex gap-3">
-        <button type="submit" disabled={saving} className="px-6 py-2.5 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-50">
-          {saving ? "Saving…" : isEditing ? "Update Product" : "Create Product"}
-        </button>
-        <button type="button" onClick={() => router.back()} className="px-6 py-2.5 border rounded-lg text-sm font-medium hover:bg-accent transition-colors">
-          Cancel
-        </button>
+      <div className="flex gap-3 justify-between">
+        <div className="flex gap-3">
+          <button type="submit" disabled={saving} className="px-6 py-2.5 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-50">
+            {saving ? "Saving…" : isEditing ? "Update Product" : "Create Product"}
+          </button>
+          <button type="button" onClick={() => router.back()} className="px-6 py-2.5 border rounded-lg text-sm font-medium hover:bg-accent transition-colors">
+            Cancel
+          </button>
+        </div>
+        {isEditing && (
+          <button
+            type="button"
+            onClick={async () => {
+              if (!confirm("Delete this product? This cannot be undone.")) return;
+              const res = await fetch(`/api/admin/products/${initialData!.id}`, { method: "DELETE" });
+              if (res.ok) { router.push("/admin/products"); router.refresh(); }
+              else { const d = await res.json(); setError(d.error ?? "Delete failed"); }
+            }}
+            className="px-6 py-2.5 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700 transition-colors"
+          >
+            Delete Product
+          </button>
+        )}
       </div>
     </form>
   );
